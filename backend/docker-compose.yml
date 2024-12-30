@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+    rollercoaster-api:
+        build:
+            context: .
+            target: prod
+        ports:
+            - 3051:3051
+        volumes:
+            - ./logs:/app/logs
+            - ./datastore:/app/datastore
+        environment:
+            - PORT=3051
+        env_file:
+            - .env.prod
+        command: sh -c "npm start"
+        profiles: ['prod']
+    rollercoaster-api-dev:
+        build:
+            context: .
+            target: dev
+        ports:
+            - 3050:3050
+        volumes:
+            - ./src:/app/src
+            - ./logs:/app/logs
+            - ./datastore:/app/datastore
+        environment:
+            - PORT=3050
+            - LOG_LEVEL=info
+        env_file:
+            - .env.dev
+        command: sh -c "npm run dev"
+        profiles: ['dev']

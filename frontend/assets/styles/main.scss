@@ -1,0 +1,69 @@
+@use 'BackgroundsLayers';
+@use 'GameHistory';
+@use 'DifficultyButton';
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e;
+    color: white;
+}
+
+canvas {
+    cursor: pointer;
+    @extend .shadowBox;
+}
+
+.shadowBox {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.mg-c-game__container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.mg-c-game__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px;
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+    }
+}
+
+.mg-c-game__stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 16px;
+}
+
+.mg-c-game__meta {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 800px;
+    margin: 16px 0;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+    @extend .shadowBox;
+
+    @media screen and (max-width: 768px) {
+        margin: 0;
+        border-radius: 0;
+    }
+}
+
+.mg-c-game__meta-info {
+    font-size: 14px;
+}

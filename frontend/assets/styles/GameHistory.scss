@@ -1,0 +1,41 @@
+.mg-c-history__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+
+    @media screen and (max-width: 768px) {
+        width: calc(100% - 18px);
+    }
+}
+
+.mg-c-history__table-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 16px;
+}
+
+.mg-c-history__table-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 6px 0;
+}
+
+.mg-c-history__table-row-title {
+    font-weight: 400;
+    color: #a8a8a8;
+}
+
+.mg-c-history__underline {
+    width: 100%;
+}
+
+.mg-c-history__no-history {
+    font-size: 32px;
+    padding: 42px;
+    color: #a8a8a8;
+}

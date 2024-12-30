@@ -1,0 +1,36 @@
+
+.mg-c-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 40px;
+    margin: 4px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    &:hover {
+        transform: scale(1.2);
+        transition: all .3s;
+    }
+}
+
+.mg-c-button__difficulty {
+    @extend .mg-c-button;
+
+    color: #ffffff;
+
+    &.easy {
+        background: linear-gradient(#919191, #353535);
+    }
+
+    &.medium {
+        background: linear-gradient(#0033cc, #3c78fa);
+    }
+
+    &.hard {
+        background: linear-gradient(#6600cc, #cf56ff);
+    }
+}

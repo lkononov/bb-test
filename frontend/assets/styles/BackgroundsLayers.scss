@@ -1,0 +1,19 @@
+.mg-c-parallax__container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    perspective: 1px;
+}
+
+.mg-c-parallax__layer {
+    position: absolute;
+    width: 100%;
+    height: 120%;
+    background-size: cover;
+    background-position: center;
+    transform-origin: center;
+    transition: transform 0.1s ease-out;
+}

@@ -1,0 +1,182 @@
+# Roller Coaster API
+
+Application for managing roller coasters metadata, with real-time monitoring logs
+
+## Requirements
+
+- Docker Compose
+- Redis [standalone]
+
+## Setup
+
+Configure .env file due to environment.
+
+Example provided in file:
+
+```bash
+.env.example
+```
+
+For production environment:
+
+```bash
+.env.prod
+```
+
+For development environment:
+
+```bash
+.env.dev
+```
+
+## Run development mode with hot reload of source files
+
+```bash
+docker compose --profile dev up
+```
+
+## Run production mode
+
+```bash
+docker compose --profile prod up
+```
+
+## API
+
+**Register roller coaster:**
+
+| **Structure**     | **Description**                                                                                |
+| ----------------- | ---------------------------------------------------------------------------------------------- |
+| `Endpoint URL`    | `http://HOST:PORT/api/coasters`                                                                |
+| `HTTP Method`     | `POST`                                                                                         |
+| `Request Headers` | `Content-Type: application/json`                                                               |
+| `Request Body`    | JSON object containing the coaster details. See the schema below.                              |
+| `Response`        | Returns a JSON object with the id of the newly created coaster or an error message if invalid. |
+
+| **Parameter**      | **Type** | **Description**                         | **Required** | **Example** |
+| ------------------ | -------- | --------------------------------------- | ------------ | ----------- |
+| `liczba_personelu` | Integer  | Number of personnel.                    | Yes          | `16`        |
+| `liczba_klientow`  | Integer  | Number of customers.                    | Yes          | `60000`     |
+| `dl_trasy`         | Integer  | Length of the track (in meters).        | Yes          | `1800`      |
+| `godziny_od`       | String   | Opening time in 24-hour format (HH:mm). | Yes          | `08:00`     |
+| `godziny_do`       | String   | Closing time in 24-hour format (HH:mm). | Yes          | `16:00"`    |
+
+**Request:**
+
+```bash
+curl -X POST http://localhost:3050/api/coasters \
+-H "Content-Type: application/json" \
+-d '{
+    "liczba_personelu": 16,
+    "liczba_klientow": 6000,
+    "dl_trasy": 1800,
+    "godziny_od": "08:00",
+    "godziny_do": "16:00"
+}'
+```
+
+**Response:**
+
+```json
+201 Created
+{
+    "id": "UUIDv4"
+}
+```
+
+**Update roller coaster:**
+
+| **Structure**     | **Description**                                                   |
+| ----------------- | ----------------------------------------------------------------- |
+| `Endpoint URL`    | `http://HOST:PORT/api/coasters/:coasterId`                        |
+| `HTTP Method`     | `PUT`                                                             |
+| `Request Headers` | `Content-Type: application/json`                                  |
+| `Request Body`    | JSON object containing the coaster details. See the schema below. |
+| `Response`        | Returns status code on success or fail.                           |
+
+| **Parameter**      | **Type** | **Description**                         | **Required** | **Example** |
+| ------------------ | -------- | --------------------------------------- | ------------ | ----------- |
+| `liczba_personelu` | Integer  | Number of personnel.                    | Yes          | `20`        |
+| `liczba_klientow`  | Integer  | Number of customers.                    | Yes          | `40000`     |
+| `godziny_od`       | String   | Opening time in 24-hour format (HH:mm). | Yes          | `09:00`     |
+| `godziny_do`       | String   | Closing time in 24-hour format (HH:mm). | Yes          | `21:00`     |
+
+**Request:**
+
+```bash
+curl -X PUT http://localhost:3050/api/coasters/:coasterId \
+-H "Content-Type: application/json" \
+-d '{
+    "liczba_personelu": 20,
+    "liczba_klientow": 1000,
+    "godziny_od": "09:00",
+    "godziny_do": "21:00"
+}'
+```
+
+**Response:**
+
+```bash
+200 OK
+```
+
+**Register wagon for roller coaster:**
+
+| **Structure**     | **Description**                                                                                |
+| ----------------- | ---------------------------------------------------------------------------------------------- |
+| `Endpoint URL`    | `http://HOST:PORT/api/coasters/:coasterId/wagons`                                              |
+| `HTTP Method`     | `POST`                                                                                         |
+| `Request Headers` | `Content-Type: application/json`                                                               |
+| `Request Body`    | JSON object containing the coaster details. See the schema below.                              |
+| `Response`        | Returns a JSON object with the id of the newly created coaster or an error message if invalid. |
+
+| **Parameter**     | **Type** | **Description**                | **Required** | **Example** |
+| ----------------- | -------- | ------------------------------ | ------------ | ----------- |
+| `predkosc_wagonu` | Integer  | Speed of wagor in m/s.         | Yes          | `1.2`       |
+| `ilosc_miejsc`    | Integer  | Number seets in wagon.         | Yes          | `32`        |
+| `:coasterId`      | String   | ID of existing roller coaster. | Yes          | `UUIDv4`    |
+
+**Request:**
+
+```bash
+curl -X POST http://localhost:3050/api/coasters/:coasterId/wagons \
+-H "Content-Type: application/json" \
+-d '{
+    "predkosc_wagonu": 2,
+    "ilosc_miejsc": 32
+}'
+```
+
+**Response:**
+
+```json
+201 Created
+{
+    "id": "UUIDv4"
+}
+```
+
+**Remove existing wagon from roller coaster:**
+
+| **Structure**  | **Description**                                            |
+| -------------- | ---------------------------------------------------------- |
+| `Endpoint URL` | `http://HOST:PORT/api/coasters/:coasterId/wagons/:wagonId` |
+| `HTTP Method`  | `DELETE`                                                   |
+| `Response`     | Returns status code on success or fail.                    |
+
+| **Parameter** | **Type** | **Description**                | **Required** | **Example** |
+| ------------- | -------- | ------------------------------ | ------------ | ----------- |
+| `:wagonId`    | Integer  | ID of existing wagon.          | Yes          | `UUIDv4`    |
+| `:coasterId`  | String   | ID of existing roller coaster. | Yes          | `UUIDv4`    |
+
+**Request:**
+
+```bash
+curl -X DELETE http://localhost:3050/api/coasters/:coasterId/wagons/:wagonId
+```
+
+**Response:**
+
+```bash
+200 OK
+```
